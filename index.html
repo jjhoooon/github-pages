@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — 장재훈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d14;
+    --surface: #11111a;
+    --card: #14141e;
+    --card-hover: #1a1a28;
+    --border: #1e1e2e;
+    --border-bright: #2e2e44;
+    --accent: #7cffb2;
+    --accent2: #5b9fff;
+    --accent3: #ff7eb3;
+    --accent4: #ffd166;
+    --text: #e2e2f0;
+    --muted: #6e6e96;
+    --dim: #3a3a58;
+    --font-head: 'Bebas Neue', sans-serif;
+    --font-body: 'Noto Sans KR', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    padding: 80px 80px 60px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: 'PROJECTS';
+    position: absolute;
+    right: 60px; bottom: -20px;
+    font-family: var(--font-head);
+    font-size: 180px;
+    color: rgba(255,255,255,0.015);
+    letter-spacing: 10px;
+    pointer-events: none;
+    user-select: none;
+  }
+  .header-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .header-title {
+    font-family: var(--font-head);
+    font-size: clamp(56px, 8vw, 100px);
+    letter-spacing: 4px;
+    line-height: 0.9;
+    color: var(--text);
+    margin-bottom: 28px;
+  }
+  .header-title span { color: var(--accent); }
+  .header-desc {
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.9;
+  }
+
+  /* ─── NAV DOTS ─── */
+  .project-nav {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    z-index: 50;
+  }
+  .nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--dim);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .nav-dot::after {
+    content: attr(data-label);
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+  .nav-dot:hover { background: var(--accent); }
+  .nav-dot:hover::after { opacity: 1; }
+  .nav-dot.active { background: var(--accent); transform: scale(1.4); }
+
+  /* ─── PROJECT SECTION ─── */
+  .project-section {
+    padding: 80px 80px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .project-section:last-child { border-bottom: none; }
+
+  /* color accent per project */
+  .proj-1 { --p-accent: #7cffb2; }
+  .proj-2 { --p-accent: #5b9fff; }
+  .proj-3 { --p-accent: #ffd166; }
+  .proj-4 { --p-accent: #ff7eb3; }
+
+  .project-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--p-accent);
+  }
+
+  /* header row */
+  .proj-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 56px;
+  }
+  .proj-index {
+    font-family: var(--font-head);
+    font-size: 100px;
+    line-height: 0.85;
+    color: rgba(255,255,255,0.04);
+    flex-shrink: 0;
+    user-select: none;
+  }
+  .proj-title-block { flex: 1; }
+  .proj-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    border: 1px solid var(--p-accent);
+    background: rgba(255,255,255,0.02);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--p-accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .proj-title {
+    font-family: var(--font-head);
+    font-size: clamp(36px, 5vw, 62px);
+    letter-spacing: 2px;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .proj-subtitle {
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .proj-meta-right {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .proj-period {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .proj-role {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--p-accent);
+    letter-spacing: 1px;
+  }
+
+  /* ─── CONTENT GRID ─── */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    margin-bottom: 2px;
+  }
+  .content-grid.full { grid-template-columns: 1fr; }
+  .content-grid.trio { grid-template-columns: 1fr 1fr 1fr; }
+
+  .block {
+    background: var(--card);
+    padding: 36px 36px;
+    transition: background 0.25s;
+  }
+  .block:hover { background: var(--card-hover); }
+
+  .block-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--p-accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .block-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-bright);
+  }
+
+  .block-title {
+    font-family: var(--font-head);
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  /* tech stack */
+  .stack-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .stack-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid var(--border-bright);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text);
+    background: rgba(255,255,255,0.02);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .stack-tag:hover { border-color: var(--p-accent); color: var(--p-accent); }
+  .stack-tag.primary {
+    border-color: var(--p-accent);
+    color: var(--p-accent);
+    background: rgba(255,255,255,0.03);
+  }
+  .stack-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--p-accent);
+    flex-shrink: 0;
+  }
+
+  /* body text */
+  .body-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.95;
+  }
+  .body-text strong { color: var(--text); font-weight: 500; }
+  .body-text em { color: var(--p-accent); font-style: normal; font-family: var(--font-mono); font-size: 13px; }
+
+  /* bullet list */
+  .bullet-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+  }
+  .bullet-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  .bullet-list li::before {
+    content: '▸';
+    color: var(--p-accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-size: 12px;
+  }
+  .bullet-list li strong { color: var(--text); font-weight: 500; }
+
+  /* trouble list */
+  .trouble-item {
+    border: 1px solid var(--border-bright);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .trouble-item:last-child { margin-bottom: 0; }
+  .trouble-problem {
+    padding: 14px 20px;
+    background: rgba(255,80,80,0.04);
+    border-bottom: 1px solid var(--border-bright);
+    display: flex;
+    gap: 12px;
+    font-size: 13px;
+    color: #ff8080;
+  }
+  .trouble-problem::before { content: '문제'; font-family: var(--font-mono); font-size: 10px; opacity: 0.6; white-space: nowrap; margin-top: 1px; }
+  .trouble-solution {
+    padding: 14px 20px;
+    display: flex;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .trouble-solution::before { content: '해결'; font-family: var(--font-mono); font-size: 10px; color: var(--accent); opacity: 0.8; white-space: nowrap; margin-top: 1px; }
+
+  /* result badges */
+  .result-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .result-badge {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 24px;
+    border: 1px solid var(--border-bright);
+    background: rgba(255,255,255,0.02);
+    min-width: 140px;
+  }
+  .result-badge .result-num {
+    font-family: var(--font-head);
+    font-size: 36px;
+    letter-spacing: 2px;
+    color: var(--p-accent);
+    line-height: 1;
+  }
+  .result-badge .result-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* award */
+  .award-strip {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    border: 1px solid var(--accent4);
+    background: rgba(255,209,102,0.05);
+    font-size: 13px;
+    color: var(--accent4);
+    margin-top: 20px;
+    font-weight: 500;
+  }
+
+  /* separator */
+  .gap { height: 2px; background: var(--bg); }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--dim); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+  /* ─── FADE ANIMATION ─── */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    header, .project-section { padding: 60px 28px; }
+    .proj-header { flex-direction: column; gap: 20px; }
+    .proj-meta-right { text-align: left; }
+    .proj-index { font-size: 60px; }
+    .content-grid, .content-grid.trio { grid-template-columns: 1fr; }
+    .project-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── FIXED NAV ─── -->
+<nav class="project-nav">
+  <div class="nav-dot active" data-label="포트폴리오 생성 서비스" onclick="scrollToSection('proj1')"></div>
+  <div class="nav-dot" data-label="개발자 커뮤니티" onclick="scrollToSection('proj2')"></div>
+  <div class="nav-dot" data-label="커피 레시피 서비스" onclick="scrollToSection('proj3')"></div>
+  <div class="nav-dot" data-label="열차타요" onclick="scrollToSection('proj4')"></div>
+</nav>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <p class="header-eyebrow">// Project Portfolio · 장재훈</p>
+  <h1 class="header-title">PROJECT<br><span>WORKS</span></h1>
+  <p class="header-desc">기술 스택 · 프로젝트 내용 · 트러블슈팅 · 개선 및 성과를 담은 프로젝트 포트폴리오입니다.</p>
+</header>
+
+<!-- ══════════════════════════════════════
+     PROJECT 01 — 포트폴리오 생성 서비스
+══════════════════════════════════════ -->
+<section class="project-section proj-1 fade-in" id="proj1">
+
+  <div class="proj-header">
+    <div class="proj-index">01</div>
+    <div class="proj-title-block">
+      <div class="proj-type">개인 프로젝트</div>
+      <h2 class="proj-title">포트폴리오<br>생성 서비스</h2>
+      <p class="proj-subtitle">취업준비생의 프로젝트 경험을 AI 기반으로 포트폴리오 카드로 자동 변환</p>
+    </div>
+    <div class="proj-meta-right">
+      <p class="proj-period">2026.02.23 ~ 2026.03.13</p>
+      <p class="proj-role">기획 · 풀스택 · 서비스 운영</p>
+    </div>
+  </div>
+
+  <!-- 기술 스택 -->
+  <div class="content-grid full fade-in">
+    <div class="block">
+      <p class="block-label">Tech Stack</p>
+      <div class="stack-list">
+        <span class="stack-tag primary"><span class="stack-dot"></span>Next.js</span>
+        <span class="stack-tag primary"><span class="stack-dot"></span>NestJS</span>
+        <span class="stack-tag primary"><span class="stack-dot"></span>TypeScript</span>
+        <span class="stack-tag"><span class="stack-dot"></span>LLM API</span>
+        <span class="stack-tag"><span class="stack-dot"></span>Prompt Engineering</span>
+        <span class="stack-tag"><span class="stack-dot"></span>React</span>
+        <span class="stack-tag"><span class="stack-dot"></span>REST API</span>
+        <span class="stack-tag"><span class="stack-dot"></span>Git</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- 프로젝트 내용 -->
+  <div class="content-grid fade-in">
+    <div class="block">
+      <p class="block-label">프로젝트 내용</p>
+      <ul class="bullet-list">
+        <li><strong>기획 배경:</strong> 취업준비생이 프로젝트 경험을 체계적으로 정리하는 데 어려움을 겪는다는 문제 인식에서 출발</li>
+        <li>사용자가 최소한의 입력만으로 <strong>정돈된 포트폴리오 카드</strong>를 생성할 수 있도록 AI 연동 서비스를 1인 개발</li>
+        <li>프로젝트 개요, 기술 선택 이유, 문제 상황, 해결 방식, 성과 등 <strong>문맥 정보를 구조화</strong>해 LLM에 전달하는 파이프라인 설계</li>
+        <li>결과 형식과 필수 요소가 빠지지 않도록 <strong>프롬프트 엔지니어링</strong> 고도화</li>
+        <li>기획 → 개발 → 테스트 → 베타검증 → 출시 전 과정 1인 수행</li>
+      </ul>
+    </div>
+    <div class="block">
+      <p class="block-label">트러블슈팅</p>
+      <div class="trouble-item">
+        <div class="trouble-problem">사용자가 적게 입력할수록 AI 결과물의 일관성이 낮아지고 핵심 요소가 누락되는 문제 발생</div>
+        <div class="trouble-solution">컨텍스트를 6개 항목(개요·기술선택·문제·해결·성과·결과형식)으로 구조화하고, 프롬프트에 필수 출력 요소를 명시적으로 지정하여 결과 품질 표준화</div>
+      </div>
+      <div class="trouble-item">
+        <div class="trouble-problem">초기 AI 응답에서 형식이 제각각이어서 카드 UI 렌더링에 오류 발생</div>
+        <div class="trouble-solution">응답 스키마를 JSON 형식으로 강제하고, 파싱 실패 시 재요청 로직 추가 및 fallback UI 처리</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- 성과 -->
+  <div class="content-grid full fade-in">
+    <div class="block">
+      <p class="block-label">개선 및 성과</p>
+      <div class="result-row">
+        <div class="result-badge">
+          <span class="result-num">30+</span>
+          <span class="result-label">반복 테스트 횟수</span>
+        </div>
+        <div class="result-badge">
+          <span class="result-num">5명</span>
+          <span class="result-label">베타테스터 검증</span>
+        </div>
+        <div class="result-badge">
+          <span class="result-num">50명</span>
+          <span class="result-label">직업훈련 교육생 출시</span>
+        </div>
+        <div class="result-badge">
+          <span class="result-num">4.1점</span>
+          <span class="result-label">만족도 (목표 3.5점)</span>
+        </div>
+      </div>
+      <ul class="bullet-list" style="margin-top:24px;">
+        <li>레포지토리 기준 30회 이상 반복 테스트 후 베타테스터 5명 대상 불편 요소·결과 품질 점검, 피드백 반영</li>
+        <li>직업훈련 교육생 50명에게 정식 출시, 설문 목표(3.5점) 대비 <strong>평균 4.1점 달성</strong></li>
+        <li>기능 구현을 넘어 <strong>사용자 평가로 품질을 증명하는 개발 사이클</strong> 직접 완수</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════
+     PROJECT 02 — 개발자 커뮤니티 플랫폼
+══════════════════════════════════════ -->
+<section class="project-section proj-2 fade-in" id="proj2">
+
+  <div class="proj-header">
+    <div class="proj-index">02</div>
+    <div class="proj-title-block">
+      <div class="proj-type">팀 프로젝트 · (주)그렙 부트캠프</div>
+      <h2 class="proj-title">개발자<br>커뮤니티 플랫폼</h2>
+      <p class="proj-subtitle">게시글·커뮤니티 + 실시간 채팅이 결합된 개발자 소통 공간</p>
+    </div>
+    <div class="proj-meta-right">
+      <p class="proj-period">2024.09 ~ 2024.10</p>
+      <p class="proj-role">채팅 기능 개발 · 소켓 서버 구현</p>
+    </div>
+  </div>
+
+  <!-- 기술 스택 -->
+  <div class="content-grid full fade-in">
+    <div class="block">
+      <p class="block-label">Tech Stack</p>
+      <div class="stack-list">
+        <span class="stack-tag primary"><span class="stack-dot"></span>React</span>
+        <span class="stack-tag primary"><span class="stack-dot"></span>TypeScript</span>
+        <span class="stack-tag primary"><span class="stack-dot"></span>Express</span>
+        <span class="stack-tag primary"><span class="stack-dot"></span>Socket.io</span>
+        <span class="stack-tag"><span class="stack-dot"></span>Node.js</span>
+        <span class="stack-tag"><span class="stack-dot"></span>REST API</span>
+        <span class="stack-tag"><span class="stack-dot"></span>Git</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap"></div>
+
+  <div class="content-grid fade-in">
+    <div class="block">
+      <p class="block-label">프로젝트 내용</p>
+      <ul class="bullet-list">
+        <li>게시글·커뮤니티 기능에 더해 <strong>실시간 채팅</strong>이 결합된 개발자 소통 플랫폼</li>
+        <li>담당 파트: <strong>채팅 기능 전반 구현 + 소켓 서버 개발</strong></li>
+        <li>실시간 메시지 <strong>송수신 구조 설계</strong>: 클라이언트-서버 간 이벤트 흐름 연결</li>
+        <li>다중 사용자 동시 접속 환경에서도 <strong>안정적으로 메시지가 전달</strong>되는 처리 구조 구현</li>
+        <li>채팅방 입장·퇴장·메시지 브로드캐스트 이벤트 설계 및 서버 사이드 에러 핸들링</li>
+      </ul>
+    </div>
+    <div class="block">
+      <p class="block-label">트러블슈팅</p>
+      <div class="trouble-item">
+        <div class="trouble-problem">다수 사용자가 동시에 채팅방에 접속할 때 메시지 순서가 뒤바뀌거나 일부 클라이언트에 미전달되는 문제</div>
+        <div class="trouble-solution">소켓 룸(room) 단위로 메시지 브로드캐스트를 분리하고, 서버 이벤트 큐 처리 순서를 보장하는 구조로 재설계</div>
+      </div>
+      <div class="trouble-item">
+        <div class="trouble-problem">클라이언트 재연결 시 이전 채팅 히스토리가 유실되는 UX 문제</div>
+        <div class="trouble-solution">연결 시점에 최근 메시지 n개를 서버에서 즉시 전송하는 초기화 이벤트 추가, 사용자 경험 개선</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap"></div>
+
+  <div class="content-grid full fade-in">
+    <div class="block">
+      <p class="block-label">개선 및 성과</p>
+      <ul class="bullet-list">
+        <li>단순 화면 구현을 넘어 <strong>실시간 통신 구조와 서버 처리 흐름</strong>에 대한 이해를 직접 확장</li>
+        <li>클라이언트와 서버 양쪽을 함께 설계하며 <strong>풀스택 관점의 아키텍처 사고력</strong> 향상</li>
+        <li>사용자 간 상호작용이 핵심인 서비스의 실시간 기능을 <strong>실서비스 수준으로 완성</strong></li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════
+     PROJECT 03 — AI 커피 레시피 생성 서비스
+══════════════════════════════════════ -->
+<section class="project-section proj-3 fade-in" id="proj3">
+
+  <div class="proj-header">
+    <div class="proj-index">03</div>
+    <div class="proj-title-block">
+      <div class="proj-type">팀 프로젝트 · 캡스톤디자인 · 동국대학교</div>
+      <h2 class="proj-title">AI 드립 커피<br>레시피 생성 서비스</h2>
+      <p class="proj-subtitle">AI · IoT · 웹을 유기적으로 연계한 커피 레시피 자동 생성 시스템</p>
+    </div>
+    <div class="proj-meta-right">
+      <p class="proj-period">2024.03 ~ 2024.06</p>
+      <p class="proj-role">팀장 · 프론트엔드 / 백엔드 / 인프라</p>
+    </div>
+  </div>
+
+  <!-- 기술 스택 -->
+  <div class="content-grid full fade-in">
+    <div class="block">
+      <p class="block-label">Tech Stack</p>
+      <div class="stack-list">
+        <span class="stack-tag primary"><span class="stack-dot"></span>React</span>
+        <span class="stack-tag primary"><span class="stack-dot"></span>Express</span>
+        <span class="stack-tag primary"><span class="stack-dot"></span>JavaScript</span>
+        <span class="stack-tag"><span class="stack-dot"></span>AI (LLM)</span>
+        <span class="stack-tag"><span class="stack-dot"></span>IoT 연동</span>
+        <span class="stack-tag"><span class="stack-dot"></span>Docker</span>
+        <span class="stack-tag"><span class="stack-dot"></span>CI/CD</span>
+        <span class="stack-tag"><span class="stack-dot"></span>Linux 서버</span>
+        <span class="stack-tag"><span class="stack-dot"></span>REST API</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap"></div>
+
+  <div class="content-grid fade-in">
+    <div class="block">
+      <p class="block-label">프로젝트 내용</p>
+      <ul class="bullet-list">
+        <li>웹(React/Express), AI(레시피 생성), IoT(센서 연동) 세 파트를 <strong>하나의 서비스로 통합</strong></li>
+        <li>담당: <strong>프론트엔드 전반 + 백엔드 API + 배포 인프라 구축</strong></li>
+        <li>각 파트 결과물이 안정적으로 연결되도록 <strong>공통 응답 구조 및 테스트 배포 기준 수립</strong></li>
+        <li>팀장으로서 매일 30분 스크럼 운영, 기능을 <strong>필수/확장으로 분리하여 MVP 재정의</strong></li>
+        <li>주간 목표를 일 단위 태스크로 세분화, 완료 기준 문서화</li>
+      </ul>
+    </div>
+    <div class="block">
+      <p class="block-label">트러블슈팅</p>
+      <div class="trouble-item">
+        <div class="trouble-problem">파트별 기술 이해 부족으로 초반 2주간 기능 개발 일정이 평균 3일씩 지연, 파트 간 연동 과정에서도 비효율 반복</div>
+        <div class="trouble-solution">주 2회 회의를 매일 30분 스크럼으로 전환, 웹·AI·IoT 각 파트가 핵심 지식을 짧게 공유하도록 구조화. 공통 API 응답 스키마를 초기에 확정해 연동 오류 사전 차단</div>
+      </div>
+      <div class="trouble-item">
+        <div class="trouble-problem">프로젝트 중반에 초기 주제(태권도 품새 AI 평가)의 기술적 구현 가능성 문제 발생</div>
+        <div class="trouble-solution">잔여 기간·보유 기술·역할별 구현 범위를 재점검해 드립 커피 레시피 생성 서비스로 주제 전환. MVP 기준 재정의 후 일정 안에 완성</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap"></div>
+
+  <div class="content-grid full fade-in">
+    <div class="block">
+      <p class="block-label">개선 및 성과</p>
+      <div class="result-row">
+        <div class="result-badge">
+          <span class="result-num">3일→1일</span>
+          <span class="result-label">평균 일정 지연 단축</span>
+        </div>
+        <div class="result-badge">
+          <span class="result-num">3파트</span>
+          <span class="result-label">Web · AI · IoT 통합</span>
+        </div>
+      </div>
+      <ul class="bullet-list" style="margin-top:24px;">
+        <li>초기 평균 3일 지연 → 후반부 <strong>최대 1일 이내</strong>로 일정 안정화</li>
+        <li>남는 시간에 입력 검증, 예외 처리, 로딩 UX까지 추가 보완 가능</li>
+      </ul>
+      <div class="award-strip">🏆 동국대학교 창의 아이디어 경진대회 — 캡스톤디자인 장려상 (2024.06.20)</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════
+     PROJECT 04 — 열차타요
+══════════════════════════════════════ -->
+<section class="project-section proj-4 fade-in" id="proj4">
+
+  <div class="proj-header">
+    <div class="proj-index">04</div>
+    <div class="proj-title-block">
+      <div class="proj-type">팀 프로젝트 · 동국대 학술동아리 CAPS</div>
+      <h2 class="proj-title">열차타요<br>— 실시간 열차 정보 서비스</h2>
+      <p class="proj-subtitle">서울시 지하철 공공데이터 기반 실시간 도착 정보 및 경로 탐색 서비스</p>
+    </div>
+    <div class="proj-meta-right">
+      <p class="proj-period">2024.02.08 ~ 2024.02.20</p>
+      <p class="proj-role">팀장 · 프론트엔드 · 배포</p>
+    </div>
+  </div>
+
+  <!-- 기술 스택 -->
+  <div class="content-grid full fade-in">
+    <div class="block">
+      <p class="block-label">Tech Stack</p>
+      <div class="stack-list">
+        <span class="stack-tag primary"><span class="stack-dot"></span>React</span>
+        <span class="stack-tag primary"><span class="stack-dot"></span>JavaScript</span>
+        <span class="stack-tag"><span class="stack-dot"></span>서울 열린데이터광장 API</span>
+        <span class="stack-tag"><span class="stack-dot"></span>배포 (Vercel/서버)</span>
+        <span class="stack-tag"><span class="stack-dot"></span>Git</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap"></div>
+
+  <div class="content-grid fade-in">
+    <div class="block">
+      <p class="block-label">프로젝트 내용</p>
+      <ul class="bullet-list">
+        <li>서울시 지하철 공공데이터를 활용한 <strong>실시간 열차 도착 정보 및 경로 탐색</strong> 서비스</li>
+        <li>공공데이터 활용 서비스 대회 참가, <strong>2주 내 기획·개발·배포 완료</strong>라는 제한 조건</li>
+        <li>팀장으로서 요구사항 정의, 기능 우선순위 조정, 일정 관리, 프론트엔드 개발, 배포 관리 <strong>전 과정 담당</strong></li>
+        <li>팀원들이 바로 실행할 수 있도록 작업을 세분화·문서화해 <strong>병렬 개발 지원</strong></li>
+        <li>실시간 API 폴링 구조로 열차 도착 정보 갱신 구현</li>
+      </ul>
+    </div>
+    <div class="block">
+      <p class="block-label">트러블슈팅</p>
+      <div class="trouble-item">
+        <div class="trouble-problem">2주라는 짧은 기간에 다양한 기능(실시간 정보, 경로 탐색, 배포)을 모두 구현하기 어려운 일정 압박</div>
+        <div class="trouble-solution">해야 할 일과 나중에 해도 되는 일을 명확히 구분, 핵심 기능(실시간 도착 정보)을 우선 완성 후 추가 기능 순차 적용</div>
+      </div>
+      <div class="trouble-item">
+        <div class="trouble-problem">공공 API 응답 속도 지연 및 간헐적 오류로 인한 UI 미응답 상태</div>
+        <div class="trouble-solution">로딩 상태 UI 및 에러 fallback 처리를 추가해 사용자에게 시각적 피드백 제공</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap"></div>
+
+  <div class="content-grid full fade-in">
+    <div class="block">
+      <p class="block-label">개선 및 성과</p>
+      <div class="result-row">
+        <div class="result-badge">
+          <span class="result-num">2주</span>
+          <span class="result-label">개발·배포 완료</span>
+        </div>
+        <div class="result-badge">
+          <span class="result-num">0일</span>
+          <span class="result-label">일정 지연 없이 완수</span>
+        </div>
+      </div>
+      <ul class="bullet-list" style="margin-top:24px;">
+        <li>제한된 기간 안에 공공데이터를 <strong>실제 서비스 형태로 완성·배포</strong>한 경험 확보</li>
+        <li>팀장으로서 우선순위 기반 일정 관리 역량을 실전에서 검증, <strong>일정 지연 없이 완수</strong></li>
+        <li>이후 프로젝트에서도 반복 적용되는 <strong>리스크 기반 우선순위 설계 습관</strong>의 출발점이 된 프로젝트</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<script>
+  // Intersection observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Nav dot active state
+  const sections = ['proj1','proj2','proj3','proj4'];
+  const dots = document.querySelectorAll('.nav-dot');
+  const secObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = sections.indexOf(e.target.id);
+        dots.forEach((d,i) => d.classList.toggle('active', i === idx));
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) secObserver.observe(el);
+  });
+
+  function scrollToSection(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
